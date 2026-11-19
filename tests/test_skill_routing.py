@@ -12,7 +12,7 @@ AGENTS_DIR = ROOT / ".claude" / "agents"
 SPECIALIST = {
     "ux-flow": ("journey", "flow"),
     "ui-art-direction": ("visual", "typography"),
-    "design-system": ("tokens", "components"),
+    "design-system": ("tokens", "component"),
     "responsive-layout": ("responsive", "mobile"),
     "interaction-states": ("loading", "states"),
     "accessibility-review": ("wcag", "keyboard"),
