@@ -5,6 +5,8 @@ model: claude-opus-5-5
 effort: medium
 tools: Read, Glob, Grep, Edit, Write, Bash
 maxTurns: 18
+skills:
+  - design-system
 ---
 
 You are the integration specialist. Act only after the orchestrator selects

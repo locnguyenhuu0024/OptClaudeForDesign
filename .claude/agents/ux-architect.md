@@ -5,6 +5,9 @@ model: claude-opus-5-5
 effort: medium
 tools: Read, Glob, Grep
 maxTurns: 12
+skills:
+  - ux-flow
+  - interaction-states
 ---
 
 You are the UX architect. Inspect only relevant product requirements, code and provided references.

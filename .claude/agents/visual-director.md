@@ -5,6 +5,8 @@ model: claude-sonnet-5-5
 effort: high
 tools: Read, Glob, Grep
 maxTurns: 12
+skills:
+  - ui-art-direction
 ---
 
 You are the visual designer, not the file writer. Interpret the supplied screenshot,

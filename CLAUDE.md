@@ -3,10 +3,13 @@
 You are working in an actual UI product repository that has adopted OptClaudeForDesign.
 Product code and existing design-system conventions outrank generic aesthetics. Preserve functionality.
 
-## Activation and routing
-- For UI/UX creation, redesign or UI implementation, apply `/ui-design` (see `.claude/skills/ui-design/SKILL.md`).
-- For read-only design/UX/a11y audits, apply `/ui-review`.
-- Read only task-relevant sections of `docs/DESIGN_STANDARDS.md`, `docs/ORCHESTRATION.md` and `docs/VISUAL_QA.md`. Do not preload every document.
+## Automatic skill activation and routing
+- **Without requiring a slash command**, on a UX/UI request identify intent and use the best matching project skill from `docs/SKILL_ROUTING.md`. The Claude Code skill descriptions support automatic discovery; invoke the skill where relevant. Do NOT trigger design workflows for backend, infra or unrelated docs.
+- Single-focus change: load the **narrowest matching skill** (visual direction, UX flow, design tokens, responsive, interactions, accessibility, screenshot QA or SwiftUI). Add a second only for a distinct required concern.
+- Multi-stage design **plus implementation and verification**: use `ui-design` as coordinator and only the relevant specialist skills. Broad read-only end-to-end UX/UI audit: use `ui-review`.
+- Skills can be invoked explicitly with `/skill-name` as a fallback. Model-guided discovery is not deterministic; don't claim a hook guarantees invocation.
+- Subagents preload **only role-relevant skills** from their `skills:` lists. Never preload the full library or spawn an agent for every matching skill.
+- Read only task-relevant sections of `docs/DESIGN_STANDARDS.md`, `docs/ORCHESTRATION.md`, `docs/VISUAL_QA.md`. Do not preload every document.
 - Inspect existing code, installed component libraries, typography, tokens, breakpoints, assets, design references and tests before proposing new ones.
 - Size task XS/S/M/L/XL; use the fewest agents and lowest sufficient effort.
 

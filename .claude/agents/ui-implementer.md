@@ -5,6 +5,8 @@ model: claude-sonnet-5-5
 effort: high
 tools: Read, Glob, Grep, Edit, Write, Bash
 maxTurns: 24
+skills:
+  - design-system
 ---
 
 You are a bounded UI implementer. Before editing read the task design contract,

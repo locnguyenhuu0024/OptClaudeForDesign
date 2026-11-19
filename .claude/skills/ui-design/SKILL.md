@@ -1,6 +1,6 @@
 ---
 name: ui-design
-description: Design, implement and verify production UI/UX for web or native applications using scoped Claude Code sub-agents, design contracts, single-writer file ownership, and screenshots.
+description: "Orchestrate multi-step UX/UI feature design, frontend or SwiftUI implementation and rendered visual verification end-to-end. Use when asked to build or redesign a complete screen, feature or multi-screen flow, coordinate subagents, or implement and validate a new interface. For standalone visual polish or responsive fixes, use a narrower skill."
 argument-hint: "[screen, feature, or redesign brief]"
 ---
 
@@ -9,7 +9,7 @@ argument-hint: "[screen, feature, or redesign brief]"
 Request: $ARGUMENTS
 
 1. **Inspect:** identify the product, user task, code framework, tokens, component library, UI screens, existing flows, tests and existing visual references. For screenshots/Figma references, identify what must be preserved.
-2. **Route:** read only the relevant section(s) of `docs/ORCHESTRATION.md`. XS: no agent; S: one writer; M: 1–3 specialists; L/XL: partition feature/screen modules and cap active teammates. Do not spawn agents to repeat known context.
+2. **Route:** consult `docs/SKILL_ROUTING.md` and read task-relevant sections of `docs/ORCHESTRATION.md`. Apply only 1–2 specialist skills (e.g. `ui-art-direction` for visual hierarchy, `ux-flow` for multi-step navigation, `design-system` for shared tokens, `swiftui-native-design` for Apple native UI). XS: no agent; S: one writer; M: 1–3 specialists; L/XL: partition feature/screen modules. Do not load every skill or spawn agents to repeat known context.
 3. **Contract:** for M+ summarize goal, non-goals, design direction, affected files, UI states, breakpoints, functional invariants, acceptance criteria and ownership table. Use `docs/TEMPLATES.md`. Obtain design-direction approval before broad redesigns when feasible.
 4. **Parallel critique:** delegate independent *read-only* UX architecture (`ux-architect`), visual direction (`visual-director`) and accessibility (`accessibility-auditor`) only when each adds distinct value. Consolidate into one nonconflicting design contract.
 5. **Execute:** assign exactly one active writer per file (`ui-implementer` or `ui-polisher`). Use bounded file paths; do not let reviewers edit. Use `design-variant` in isolated worktrees for parallel alternatives on the same file; only the integrator applies the chosen diff.

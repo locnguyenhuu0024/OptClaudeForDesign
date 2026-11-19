@@ -2,6 +2,16 @@
 
 Read this document only when planning concurrent UI work or routing nontrivial tasks.
 
+## Skills are domain instructions; subagents are workers
+
+The auto-matching UX/UI skills in `docs/SKILL_ROUTING.md` are lightweight
+domain workflows, **not** eight additional always-on agents. Claude Code
+discovers a skill from its description, whereas a subagent runs in a separate
+context with a model, effort and tool permissions. Preloading a skill in a
+subagent injects its full body at spawn time. Limit preloads to the role's
+essential skills and only spawn a worker where independent work justifies it.
+Skills may be explicitly invoked with `/name` if discovery misses.
+
 ## Decision hierarchy
 1. Follow the current product's design system and user brief.
 2. Prefer completing the task with the fewest agents before maximizing parallelism.

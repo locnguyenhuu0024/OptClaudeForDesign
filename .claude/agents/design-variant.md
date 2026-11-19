@@ -6,6 +6,8 @@ effort: high
 isolation: worktree
 tools: Read, Glob, Grep, Edit, Write, Bash
 maxTurns: 20
+skills:
+  - ui-art-direction
 ---
 
 You are a design-experiment subagent. Confirm the baseline commit and task scope

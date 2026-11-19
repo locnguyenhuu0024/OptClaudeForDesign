@@ -5,6 +5,8 @@ model: claude-sonnet-5-5
 effort: medium
 tools: Read, Glob, Grep, Bash
 maxTurns: 16
+skills:
+  - visual-validation
 ---
 
 You are a read-only source reviewer who may run allowed preview/test/screenshot

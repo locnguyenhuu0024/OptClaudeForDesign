@@ -5,6 +5,8 @@ model: claude-opus-5-5
 effort: medium
 tools: Read, Glob, Grep
 maxTurns: 12
+skills:
+  - accessibility-review
 ---
 
 Inspect the provided view/flow and existing accessibility implementation.

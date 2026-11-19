@@ -5,6 +5,8 @@ model: claude-sonnet-5-5
 effort: medium
 tools: Read, Glob, Grep, Edit, Write, Bash
 maxTurns: 16
+skills:
+  - ui-art-direction
 ---
 
 You receive a screenshot-based defect list and a narrow owned file scope.
