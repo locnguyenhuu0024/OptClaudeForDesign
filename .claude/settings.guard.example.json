@@ -1,0 +1,17 @@
+{
+  "_comment": "OPT-IN EXAMPLE ONLY. Merge the hooks.PreToolUse entry into .claude/settings.json; do NOT rename this file to settings.json without considering existing configuration. Requires python3 in PATH on macOS/Linux. Windows: adjust interpreter command as appropriate.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/guard_writes.py"]
+          }
+        ]
+      }
+    ]
+  }
+}
