@@ -9,7 +9,7 @@ OptClaudeForDesign is a **rules and skills template**, not a frontend app. Insta
 - Keep visual quality, usability, accessibility, and design-system consistency high.
 - Route UX architecture to **Opus 5.5 Medium**, visual exploration and implementation to **Sonnet 5.5 High**, and mechanical polish/visual QA to **Sonnet 5.5 Medium**.
 - Use **parallel readers, a single writer per shared file, and parallel reviewers**.
-- Explore competing edits to **the same file** only in **isolated Git worktrees**; integrate with an explicit diff review.
+- Explore competing designs through **parallel read-only proposals**, then implement the chosen approach through **one writer**. No Git/branch/worktree/commit step is required for any design task.
 - Require a **real rendered screenshot** to justify visual acceptance. A successful build is not visual verification.
 - Load guidance progressively rather than sending every guideline to every agent.
 
@@ -53,6 +53,18 @@ available?", check skill descriptions or run `/skill-name` directly.
 This system never auto-installs dependencies or changes source merely because
 a skill has been discovered. See [skill routing and trigger tests](docs/SKILL_ROUTING.md).
 
+## Git-free design workflow
+
+Design tasks do **not** invoke version-control commands. Claude Code can work in
+a plain local project directory. For a single file, agents can concurrently
+**review and propose** but only **one agent edits**. Multi-writer tasks are
+serialized (layout → polish → verification). For alternative designs, run
+read-only `design-variant` agents with distinct concepts and select one before
+implementation. Larger edits may use an optional local file backup if needed.
+
+Version control is entirely outside the UX/UI execution policy; this repository
+is hosted on GitHub only to distribute and update the rules.
+
 ## Structure
 
 ```text
@@ -91,8 +103,8 @@ tests/
 /ui-design Redesign the billing dashboard. Retain the existing component library,
 avoid API changes, and verify desktop 1440px + mobile 390px screenshots.
 
-/ui-design Create two competing concepts for the settings screen.
-Use isolated worktrees; do not merge without my approval.
+/ui-design Propose two alternative layouts for the settings screen in parallel.
+Keep proposals read-only; let one writer implement the chosen layout.
 
 /ui-review Audit the account creation flow for accessibility,
 interaction states and visual consistency. Do not edit source files.
@@ -107,19 +119,19 @@ interaction states and visual consistency. Do not edit source files.
 3. For a handoff, `release` and `grant` the new owner.
 4. Run `python3 -m unittest discover -s tests -v` to check the guard and static skill contracts.
 
-**Important:** this is not a cross-process lock. It validates declared agent types for the native Edit/Write tools only; Bash, PowerShell, other file-editing tools, external apps and multiple instances of the *same* agent type are not covered. For strict isolation use distinct worktrees and controlled integration. Never claim that a natural-language rule or this optional hook guarantees atomic file locking.
+**Important:** this is not a cross-process lock. It validates declared agent types for native Edit/Write calls only; Bash, PowerShell, other file-editing tools, external apps and multiple instances of the *same* agent type are not covered. **Serialize writers to shared paths**; do not claim the hook guarantees atomic locking.
 
 ## Claude Code vs Cowork / normal Chat
 
-**Claude Code is the primary runtime** for repository-aware implementation, custom per-agent effort, Git worktrees, builds, screenshot loops and native hooks. **Claude Cowork** can also run agentic workflows and plugins; it is useful for research, creative brief formation and asset review, but this repository's project-local `.claude/agents` and hooks should not be assumed to load in a normal Cowork session. To reuse centrally in Cowork, package the guidance as a Claude Plugin and enable it for your account. **Normal Chat** can use skills but does not execute plugin hooks/sub-agents.
+**Claude Code is the primary runtime** for project-aware implementation, custom per-agent effort, builds, screenshot loops and native hooks. **Claude Cowork** can also run agentic workflows and plugins; it is useful for research, creative brief formation and asset review, but this repository's project-local `.claude/agents` and hooks should not be assumed to load in a normal Cowork session. To reuse centrally in Cowork, package the guidance as a Claude Plugin and enable it for your account. **Normal Chat** can use skills but does not execute plugin hooks/sub-agents.
 
-See [Claude Code custom subagents](https://code.claude.com/docs/en/sub-agents), [skills](https://code.claude.com/docs/en/skills), [hooks](https://code.claude.com/docs/en/hooks), [worktrees](https://code.claude.com/docs/en/worktrees) and [Cowork plugins](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
+See [Claude Code custom subagents](https://code.claude.com/docs/en/sub-agents), [skills](https://code.claude.com/docs/en/skills), [hooks](https://code.claude.com/docs/en/hooks) and [Cowork plugins](https://support.claude.com/en/articles/13837440-use-plugins-in-claude).
 
 ## Scope and trust
 
 - Never overwrite user work, reformat unrelated files, or add dependencies without approval.
 - Never claim screenshots, tests, tool results, or successful deployments you did not actually observe.
 - Preserve accessibility and behavior when doing visual polish.
-- A copy of this repository provides *instructions*, not automatic access to Figma, simulators, browser tools, git credentials, or model entitlements.
+- A copy of this repository provides *instructions*, not automatic access to Figma, simulators, browser tools, or model entitlements.
 
 License: no license has been assigned yet. Add one before redistributing as an open-source package.

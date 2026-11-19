@@ -22,11 +22,12 @@ Product code and existing design-system conventions outrank generic aesthetics. 
 
 ## Multi-agent safety
 - Parallelize read-only UX, visual, and accessibility investigations where worthwhile.
-- Split writable work by independent files. Never delegate concurrent writes to the same checkout/file.
-- Multiple agents may propose changes to the same file read-only; one assigned writer integrates.
-- Alternative same-file implementations require separate Git worktrees and explicit human-reviewed integration. Worktree isolation does not eliminate merge conflicts.
-- Verify worktree baseline (current HEAD vs default branch), and account for uncommitted changes.
-- If an agent reports conflicting requirements, stop that branch, resolve with the user or record the trade-off; do not silently overwrite.
+- **Do not require or operate Git as part of design execution**: no branches, worktrees, commits, merges or repository resets. The design workflow must also work in a directory without version control.
+- Split writable work by independent files. Never delegate concurrent writes to the same project file.
+- Multiple agents may analyze the same screen/file in parallel and propose alternatives **without writing source**; one assigned writer implements the selected direction.
+- If multiple agents need to edit the same file, perform a sequential handoff. Every new writer first reads the latest file contents and the previous writer's report.
+- If an agent reports conflicting requirements, stop that line of work, resolve the design decision or record the trade-off; do not silently overwrite.
+- Preserve user changes. If a risky large edit requires rollback, suggest an optional file backup; never overwrite the only current copy.
 - Reviewers do not edit product source. Do not bypass safety hooks or ownership gates.
 
 ## Nonnegotiable quality

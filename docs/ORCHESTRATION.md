@@ -52,30 +52,32 @@ These presets are hypotheses: track passes, retries, tokens and latency on your 
 | `ui-implementer` | Writable owned paths | Minimal code diff + tests |
 | `ui-polisher` | Writable owned paths, sequential | Narrow screenshot fixes |
 | `visual-qa` | Read source; may run preview/test commands | Screenshot evidence and defects |
-| `design-variant` | Isolated worktree | Competing change set, never direct merge |
-| `design-integrator` | Main checkout single writer | Reviewed integration and tests |
+| `design-variant` | Read-only | Independent alternative design proposal |
+| `design-integrator` | One assigned writer | Implement selected proposal and run checks |
 
 Read-only agents are limited to `Read, Glob, Grep`; visual-qa has `Bash` to run tests/capture
 evidence, which is *not technically read-only*. It is prohibited from modifying product source by policy.
 
-## File ownership: three supported modes
+## File ownership: Git-free modes
 
-**A. Single writer (default).** Parallel agents inspect the same file and submit critique;
-one assigned implementer owns all direct edits. Best for a single JSX/SwiftUI file.
+**A. Single writer (default).** Read-only agents concurrently inspect one screen
+or file and submit critiques; one `ui-implementer` owns direct changes. This
+works in any project directory without version control.
 
-**B. Sequential handoff.** Implementer completes layout, returns diff, releases ownership;
-polisher reads latest version and fixes visual defects. Never overlap write windows.
+**B. Sequential handoff.** The implementer completes a scoped layout change,
+finishes checks and releases ownership. A `ui-polisher` then reads the latest
+file contents and applies only the approved screenshot defects. Never overlap
+write windows on the same file.
 
-**C. Parallel design variants.** Each `design-variant` runs in `isolation: worktree`
-and may edit its own copy of the same path. Compare renders and diffs, choose one,
-then `design-integrator` alone applies the reviewed variant to the product checkout.
-Do not cherry-pick/merge blindly: semantic and line conflicts remain possible.
+**C. Parallel read-only concepts.** Multiple `design-variant` agents analyze
+the same source and produce *distinct design proposals*, with no source writes.
+The orchestrator chooses one; an assigned implementer/integrator applies it.
+Do not ask variant agents to edit the same file simultaneously.
 
-Before spawning worktrees, verify actual base ref. Claude Code defaults worktree start
-to the default branch, not necessarily the caller's feature HEAD. An optional project
-setting `{"worktree":{"baseRef":"head"}}` changes that behavior to the current HEAD
-but does not include uncommitted files. Either commit/snapshot necessary source
-first or tell the variant agent which changes are missing. Never stash/discard user edits unilaterally.
+For complex changes with rollback needs, a **separate optional local file copy**
+may be created after checking for user changes and obtaining approval when
+appropriate. Do not create branches, worktrees, commits or merges as part of
+the design workflow. Preserve all preexisting project state.
 
 ## Compact task dispatch format
 
@@ -110,18 +112,18 @@ stop_if:
 
 - Search file ownership **before** launching writers. Same agent *type* may have
 multiple concurrent instances; a natural-language owner label does NOT lock file access.
-- If ownership scopes overlap, serialize tasks or use separate worktrees.
+- If ownership scopes overlap, serialize tasks and perform explicit handoff.
 - Limit context to active task + relevant code + required design contract excerpts.
 - Collect concise reports; avoid asking each agent to reread the entire repository.
 - Main integrator reviews diffs, runs compilation/typecheck/tests and screenshot checks
 after combined changes. File-level compilation does not prove an integrated flow works.
-- No unreviewed shell write to shared files, no force push, no silent git checkout/reset.
+- No unreviewed shell writes to shared files or destructive overwriting of user changes.
 - Make parallelism conditional: coordination overhead can exceed the saved time/tokens.
 
-## Worktree checks before integration
+## Integration checks without Git
 
-1. Identify candidate commit SHA and parent/base.
-2. Verify intended diff, unexpected paths, dependency changes and behavior.
-3. Compare screenshots of same UI states/viewports.
-4. Apply selected changes through one writer; resolve conflicts deliberately.
-5. Run integrated tests, render screenshots again, record evidence.
+1. Confirm design proposal selection and current file ownership.
+2. Re-read the latest source state and ensure the intended behavior is preserved.
+3. Apply changes only through the currently assigned writer.
+4. Run integrated checks, render screenshots, inspect UX states and record evidence.
+5. Release file ownership after the task and report follow-up defects.

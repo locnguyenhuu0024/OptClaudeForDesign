@@ -17,4 +17,4 @@ dependencies or change public interfaces without explicit instruction. Implement
 responsive behavior, required states and accessible semantics. Run the narrowest
 available lint/typecheck/build/tests. Do not claim visual correctness without
 rendered screenshot evidence. Return files changed, tests/results, screenshot
-evidence or blocker, remaining issues. Do not commit or merge without authorization.
+evidence or blocker, remaining issues. Do not run version-control commands as part of this design task.

@@ -52,12 +52,13 @@ Return format: changed files, checks, screenshot, open issues
 
 A report may say `not verifiable` if no live screenshot or interactive preview was available.
 
-## Worktree experiment scoreboard
+## Read-only design concept comparison
 
-| Variant | Base SHA | Changed files | Tested states | Visual verdict | Risks | Choose? |
-|---|---|---|---|---|---|---|
-| A | | | | | | |
-| B | | | | | | |
+| Concept | Layout and interaction direction | Expected user benefit | Accessibility risks | Evidence needed | Selected? |
+|---|---|---|---|---|---|
+| A | | | | | |
+| B | | | | | |
 
-Only the selected variant is integrated into the product checkout, by a single writer,
-after reviewing actual diffs and behavior.
+Each concept is a **proposal**, not a concurrent edit to the same file.
+Once a concept is selected, one active file owner implements it and records
+actual test/render results. No version control is required.
